@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Shopping List Check Off</title>
+    <script src="angular.min.js"></script>
+    <script src="app.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="styles/bootstrap.min.css" />
+    <style>
+      .emptyMessage {
+        font-weight: bold;
+        color: red;
+        font-size: 1.2em;
+      }
+      li {
+        margin-bottom: 7px;
+        font-size: 1.2em;
+        padding: 5px;
+      }
+      li > button {
+        margin-left: 6px;
+      }
+      button.ok {
+        color: green;
+      }
+      button.remove {
+        color: red;
+      }
+    </style>
+  </head>
+  <body ng-app="ShoppingListCheckOff">
+    <div class="container">
+      <h1>Shopping List Check Off</h1>
+
+      <div class="row">
+        <!-- To Buy List -->
+        <div class="col-md-6" ng-controller="ToBuyController as buy">
+          <h2>To Buy:</h2>
+          <input
+            type="text"
+            ng-model="buy.quantity"
+            placeholder="Enter Quantity"
+          />
+          <input type="text" ng-model="buy.name" placeholder="Enter Name" />
+          <button class="btn btn-default" ng-click="buy.additemBuy()">
+            Add
+          </button>
+          <ul>
+            <li ng-repeat="item in buy.items">
+              Buy {{item.quantity}} {{item.name}}
+
+              <button class="btn btn-default ok" ng-click="buy.Buyitem($index)">
+                <span class="glyphicon glyphicon-ok"></span> Buy
+              </button>
+            </li>
+          </ul>
+          <div class="emptyMessage" ng-show="buy.msg">{{buy.msg}}</div>
+        </div>
+
+        <!-- Already Bought List -->
+        <div class="col-md-6" ng-controller="AlreadyBoughtController as bought">
+          <h2>Already Bought:</h2>
+          <ul>
+            <li ng-repeat="item in bought.items">
+              Bought {{item.quantity}} {{item.name}}
+              <button
+                class="btn btn-default remove"
+                ng-click="bought.remove($index)"
+              >
+                <span class="glyphicon glyphicon-remove"></span> Bought
+              </button>
+            </li>
+          </ul>
+          <div class="emptyMessage" ng-if="bought.msg">{{bought.msg[0]}}</div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
